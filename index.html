@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIZZ | Portfolio</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .animated-bg {
+            background: linear-gradient(-45deg, #000000, #4a0404, #800020, #1a0000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .glow-red {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+        }
+        
+        .avatar-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.7);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.7); }
+            50% { box-shadow: 0 0 70px rgba(255, 0, 0, 0.9); }
+            100% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.7); }
+        }
+        
+        .floating-icon {
+            position: absolute;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .code-editor {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .editor-header {
+            background-color: #2d2d2d;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .editor-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .editor-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27ca3f; }
+        
+        .editor-content {
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .keyword { color: #569cd6; }
+        .variable { color: #9cdcfe; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.2);
+        }
+        
+        .skill-badge {
+            display: inline-block;
+            background-color: rgba(128, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background-color: rgba(128, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+        
+        .form-input {
+            background-color: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: rgba(255, 0, 0, 0.5);
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+        
+        /* Enhanced Animation Effects */
+        .pulse-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            animation: pulse-ring 3s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.7);
+            animation: particle-float 8s infinite linear;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+        
+        .avatar-hover-effect {
+            transition: all 0.5s ease;
+        }
+        
+        .avatar-hover-effect:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        .floating-shape {
+            position: absolute;
+            opacity: 0.7;
+            animation: shape-float 15s infinite ease-in-out;
+        }
+        
+        @keyframes shape-float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(15px) rotate(240deg);
+            }
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.3);
+            transform: scale(0);
+            animation: ripple 3s infinite;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .cursor-trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+        
+        /* New Code Logo Orbit Animation */
+        .orbit-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 350px;
+        }
+        
+        .orbit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: orbit 20s linear infinite;
+        }
+        
+        .orbit-logo {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.8);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        @keyframes orbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-control:hover {
+            background: rgba(128, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+        
+        /* Social Media Button Styles */
+        .social-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+            border: 2px solid;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-5px);
+        }
+        
+        .github-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #6e5494;
+            color: #6e5494;
+        }
+        
+        .github-btn:hover {
+            background-color: #6e5494;
+            color: white;
+            box-shadow: 0 0 15px rgba(110, 84, 148, 0.7);
+        }
+        
+        .whatsapp-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #25D366;
+            color: #25D366;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.7);
+        }
+        
+        .tiktok-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #69C9D0;
+            color: #69C9D0;
+        }
+        
+        .tiktok-btn:hover {
+            background-color: #69C9D0;
+            color: white;
+            box-shadow: 0 0 15px rgba(105, 201, 208, 0.7);
+        }
+        
+        .telegram-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #0088cc;
+            color: #0088cc;
+        }
+        
+        .telegram-btn:hover {
+            background-color: #0088cc;
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 136, 204, 0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen animated-bg">
+    <!-- Audio Element -->
+    <audio id="bgAudio" loop>
+        <source src="https://files.catbox.moe/n828dj.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Audio Control -->
+    <div class="audio-control" id="audioControl">
+        <i class="fas fa-volume-up text-white text-xl"></i>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-black bg-opacity-70 backdrop-blur-md z-50 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="text-xl font-bold">ALIZZ</div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-red-400 transition-colors">Home</a>
+                <a href="#about" class="hover:text-red-400 transition-colors">About</a>
+                <a href="#projects" class="hover:text-red-400 transition-colors">Projects</a>
+                <a href="#contact" class="hover:text-red-400 transition-colors">Contact</a>
+            </div>
+            
+            <!-- Social Icons -->
+            <div class="flex space-x-4">
+                <a href="https://tiktok.com/@pendukung.onic" target="_blank" class="hover:text-red-400 transition-colors"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/6285943502869" target="_blank" class="hover:text-red-400 transition-colors"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://github.com/ALIZZ151" target="_blank" class="hover:text-red-400 transition-colors"><i class="fab fa-github"></i></a>
+                <a href="https://t.me/Lizz12087" target="_blank" class="hover:text-red-400 transition-colors"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 px-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <!-- Text Content -->
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <p class="text-xl mb-2">Hello, I'm</p>
+                <h1 class="text-5xl md:text-6xl font-bold mb-4">ALIZZ</h1>
+                <div class="text-3xl md:text-4xl font-bold mb-4 h-12">
+                    <span id="typing-text" class="text-red-400"></span>
+                    <span class="cursor">|</span>
+                </div>
+                <p class="text-lg text-gray-300 mb-8">Creating stunning and functional web experiences</p>
+                
+                <!-- Social Media Buttons -->
+                <div class="flex justify-center md:justify-start mt-8">
+                    <a href="https://github.com/ALIZZ151" target="_blank" class="social-button github-btn">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://wa.me/6285943502869" target="_blank" class="social-button whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://tiktok.com/@pendukung.onic" target="_blank" class="social-button tiktok-btn">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://t.me/Lizz12087" target="_blank" class="social-button telegram-btn">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Avatar with Enhanced Animations -->
+            <div class="md:w-1/2 flex justify-center relative">
+                <div class="avatar-container">
+                    <div class="avatar-glow"></div>
+                    <div class="pulse-ring"></div>
+                    <img src="https://files.catbox.moe/e07dh8.jpg" 
+                         alt="ALIZZ" class="rounded-full w-full h-full object-cover relative z-10 avatar-hover-effect">
+                    
+                    <!-- Code Logo Orbit -->
+                    <div class="orbit-container">
+                        <div class="orbit">
+                            <div class="orbit-logo" style="top: -20px; left: 50%; transform: translateX(-50%);">
+                                <i class="fab fa-html5 text-orange-500 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="top: 50%; right: -20px; transform: translateY(-50%);">
+                                <i class="fab fa-css3-alt text-blue-500 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="bottom: -20px; left: 50%; transform: translateX(-50%);">
+                                <i class="fab fa-js text-yellow-400 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="top: 50%; left: -20px; transform: translateY(-50%);">
+                                <i class="fab fa-react text-cyan-400 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="orbit" style="animation-duration: 25s; animation-direction: reverse;">
+                            <div class="orbit-logo" style="top: 30px; left: 30px;">
+                                <i class="fab fa-node-js text-green-500 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="top: 30px; right: 30px;">
+                                <i class="fab fa-python text-blue-400 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="bottom: 30px; right: 30px;">
+                                <i class="fab fa-git-alt text-red-500 text-xl"></i>
+                            </div>
+                            <div class="orbit-logo" style="bottom: 30px; left: 30px;">
+                                <i class="fab fa-npm text-red-400 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Floating Shapes -->
+                    <div class="floating-shape" style="top: 5%; left: 15%;">
+                        <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                    </div>
+                    <div class="floating-shape" style="top: 80%; right: 10%; animation-delay: 2s;">
+                        <div class="w-6 h-3 bg-red-400 rounded-full"></div>
+                    </div>
+                    <div class="floating-shape" style="bottom: 20%; left: 20%; animation-delay: 4s;">
+                        <div class="w-3 h-6 bg-red-300 rounded-full"></div>
+                    </div>
+                    
+                    <!-- Ripple Effects -->
+                    <div class="ripple" style="top: 50%; left: 50%; animation-delay: 0s;"></div>
+                    <div class="ripple" style="top: 50%; left: 50%; animation-delay: 1s;"></div>
+                    <div class="ripple" style="top: 50%; left: 50%; animation-delay: 2s;"></div>
+                </div>
+                
+                <!-- Background Particles -->
+                <div id="particles-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16">About Me</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <!-- Left Column - Description & Skills -->
+                <div class="md:w-1/2">
+                    <p class="text-lg mb-6">
+                        I'm a passionate web developer with a keen eye for design and a love for creating 
+                        beautiful, functional websites. With expertise in modern web technologies, I enjoy 
+                        turning complex problems into simple, elegant solutions.
+                    </p>
+                    <p class="text-lg mb-8">
+                        My journey in web development started 5 years ago, and since then I've worked on 
+                        various projects ranging from small business websites to complex web applications.
+                    </p>
+                    
+                    <h3 class="text-2xl font-bold mb-4">Skills & Technologies</h3>
+                    <div class="flex flex-wrap">
+                        <span class="skill-badge">HTML5</span>
+                        <span class="skill-badge">CSS3</span>
+                        <span class="skill-badge">JavaScript</span>
+                        <span class="skill-badge">React</span>
+                        <span class="skill-badge">Node.js</span>
+                        <span class="skill-badge">Git</span>
+                        <span class="skill-badge">Tailwind CSS</span>
+                        <span class="skill-badge">Python</span>
+                        <span class="skill-badge">MongoDB</span>
+                        <span class="skill-badge">Express.js</span>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Code Editor -->
+                <div class="md:w-1/2">
+                    <div class="code-editor">
+                        <div class="editor-header">
+                            <div class="editor-buttons">
+                                <div class="editor-button close"></div>
+                                <div class="editor-button minimize"></div>
+                                <div class="editor-button maximize"></div>
+                            </div>
+                            <div class="ml-4 text-sm text-gray-400">developer.js</div>
+                        </div>
+                        <div class="editor-content">
+                            <div><span class="keyword">const</span> <span class="variable">developer</span> = {</div>
+                            <div class="ml-4"><span class="variable">name</span>: <span class="string">'ALIZZ'</span>,</div>
+                            <div class="ml-4"><span class="variable">role</span>: <span class="string">'Web Developer'</span>,</div>
+                            <div class="ml-4"><span class="variable">passion</span>: <span class="string">'Creating amazing web experiences'</span></div>
+                            <div>};</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-black bg-opacity-40">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="E-Commerce Platform" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">E-Commerce Platform</h3>
+                        <p class="text-gray-300 mb-4">A fully responsive e-commerce website with product filtering, cart functionality, and secure checkout.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">React</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Node.js</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">MongoDB</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Stripe API</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="Task Management App" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Task Management App</h3>
+                        <p class="text-gray-300 mb-4">A productivity application for managing tasks with drag-and-drop functionality and team collaboration features.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Vue.js</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Firebase</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="Weather Dashboard" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Weather Dashboard</h3>
+                        <p class="text-gray-300 mb-4">A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">JavaScript</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">API Integration</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="Social Media App" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Social Media Platform</h3>
+                        <p class="text-gray-300 mb-4">A modern social media application with real-time messaging, post sharing, and user interaction features.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">React Native</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Firebase</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Redux</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="Portfolio Website" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Portfolio Showcase</h3>
+                        <p class="text-gray-300 mb-4">A responsive portfolio website with interactive animations, project galleries, and contact forms.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">HTML5</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">CSS3</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">JavaScript</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">GSAP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="Blog Platform" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Blog Platform</h3>
+                        <p class="text-gray-300 mb-4">A content management system for bloggers with rich text editing, categories, and comment functionality.</p>
+                        <div class="flex flex-wrap">
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Next.js</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">MongoDB</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Tailwind CSS</span>
+                            <span class="text-xs bg-gray-800 rounded-full px-3 py-1 mr-2 mb-2">Auth0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <!-- Left Column - Contact Info -->
+                <div class="md:w-1/2">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-red-500 mr-4 text-xl"></i>
+                                <span>alizzhost023@gmail.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-red-500 mr-4 text-xl"></i>
+                                <span>+62 859 4350 2869</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-red-500 mr-4 text-xl"></i>
+                                <span>Jakarta, Indonesia</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://tiktok.com/@pendukung.onic" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="https://wa.me/6285943502869" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="https://github.com/ALIZZ151" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://t.me/Lizz12087" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition-colors">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Contact Form -->
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <input type="text" placeholder="Your Name" class="form-input">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Your Email" class="form-input">
+                        </div>
+                        <div>
+                            <textarea placeholder="Your Message" rows="5" class="form-input"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg transition-colors">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 bg-black bg-opacity-70">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2023 ALIZZ. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Audio functionality
+        const bgAudio = document.getElementById('bgAudio');
+        const audioControl = document.getElementById('audioControl');
+        let isPlaying = false;
+
+        // Try to play audio automatically (with user interaction)
+        document.addEventListener('click', function() {
+            if (!isPlaying) {
+                bgAudio.play().then(() => {
+                    isPlaying = true;
+                    audioControl.innerHTML = '<i class="fas fa-volume-up text-white text-xl"></i>';
+                }).catch(error => {
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+        }, { once: true });
+
+        // Audio control toggle
+        audioControl.addEventListener('click', function() {
+            if (isPlaying) {
+                bgAudio.pause();
+                audioControl.innerHTML = '<i class="fas fa-volume-mute text-white text-xl"></i>';
+            } else {
+                bgAudio.play();
+                audioControl.innerHTML = '<i class="fas fa-volume-up text-white text-xl"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Typing Effect
+        const typingText = document.getElementById('typing-text');
+        const texts = ['Front-End', 'Web Developer', 'Problem Solver'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function type() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                // Deleting text
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                // Typing text
+                typingText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            // Check if text is complete
+            if (!isDeleting && charIndex === currentText.length) {
+                // Pause at end
+                typingSpeed = 1000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                // Move to next text
+                isDeleting = false;
+                textIndex++;
+                if (textIndex === texts.length) {
+                    textIndex = 0;
+                }
+                typingSpeed = 500;
+            }
+            
+            setTimeout(type, typingSpeed);
+        }
+        
+        // Start typing effect
+        document.addEventListener('DOMContentLoaded', type);
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Create background particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 5;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Create cursor trail effect
+        function createCursorTrail() {
+            const trail = document.createElement('div');
+            trail.classList.add('cursor-trail');
+            document.body.appendChild(trail);
+            
+            document.addEventListener('mousemove', (e) => {
+                trail.style.left = `${e.clientX}px`;
+                trail.style.top = `${e.clientY}px`;
+                
+                // Create temporary trail elements
+                const tempTrail = document.createElement('div');
+                tempTrail.classList.add('cursor-trail');
+                tempTrail.style.left = `${e.clientX}px`;
+                tempTrail.style.top = `${e.clientY}px`;
+                tempTrail.style.transform = 'scale(1)';
+                document.body.appendChild(tempTrail);
+                
+                // Remove temporary trail after animation
+                setTimeout(() => {
+                    tempTrail.remove();
+                }, 500);
+            });
+        }
+        
+        // Initialize enhanced effects
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            createCursorTrail();
+        });
+    </script>
+</body>
+</html>
